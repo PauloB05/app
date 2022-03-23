@@ -7,8 +7,7 @@
 </head>
 <link rel="stylesheet" href="css/pag1.css">
 <body>
-    
-    <form action="pagina1.php" method="post">
+    <form action="verificar.php" method="post">
         Ingrese nombre de usuario:
         <input type="text" name="name"><br>
         Ingrese clave:
