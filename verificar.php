@@ -12,7 +12,7 @@ $ingreso=mysqli_num_rows($resultado);
 
 if($ingreso){
   
-  header("location:index.php");
+  header("location:Clientes/index.php");
 
 }else{
  

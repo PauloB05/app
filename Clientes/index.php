@@ -3,17 +3,18 @@
   <?php  
   session_start();
   if (!isset($_SESSION['usuario'])) {
-      header("location:login.php");
+      header("location:../login.php");
   }
 
-  include "conexion.php";
+  require_once '../Controller/ClientesController.php';
 
-  $con=conectar();
+  $arrayClientes = traerClientes();
 
-  $sql="SELECT *  FROM clients";
-  $query=mysqli_query($con,$sql);
-     ?>
-      <!DOCTYPE html>
+  var_dump($arrayClientes);
+  die();
+
+?>
+<!DOCTYPE html>
 <html>
     <head>
         <title> pagina clientes</title>

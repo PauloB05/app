@@ -1,19 +1,19 @@
 <?php 
 
 class Cliente {
-    public function retornarClientes(){
+
+    private function retornarDatos($sql){
         require_once 'Conexion.php';
         $conexion=new Conexion();
         $cid = $conexion->conectar();
-
-        $sql = "select * from clients";
         $result = $cid->query($sql);
-        var_dump($result->fetch_all());
-        
-          
+        $res = ($result->fetch_all()) ? $result->fetch_all() : [];
+        return $res;
     }
+
+    public function traerClientes(){
+        $sql = "select * from clientes";
+        return $this->retornarDatos($sql);
+    }
+    
 }
-
-$cliente = new Cliente();
-
-$cliente->retornarClientes();
