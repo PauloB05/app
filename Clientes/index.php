@@ -7,11 +7,15 @@
   }
 
   require_once '../Controller/ClientesController.php';
+ 
+
 
   $arrayClientes = traerClientes();
+  
+//   var_dump($arrayClientes);
+//   die();
 
-  var_dump($arrayClientes);
-  die();
+  
 
 ?>
 <!DOCTYPE html>
@@ -20,8 +24,8 @@
         <title> pagina clientes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/pag1.css" rel="stylesheet">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/pag1.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
         
 
     <div class="container">
@@ -39,13 +43,14 @@
                         <th style="width: 10%">client_id</th>
                         <th style="width: 15%">nombre</th>
                         <th style="width: 15%">telefono</th>
-                        <th style="width: 10%">direccion</th>                        
-                                
+                        <th style="width: 10%">direccion</th>     
+                        
+                       
                     </tr>
                 </thead>
         <tbody>
        <?php
-                                          while($filas=mysqli_fetch_array($query)){
+                                          foreach($arrayClientes as $filas){
                                         ?>
                                             <tr>
                                                 <th><?= $filas['client_id']?></th>

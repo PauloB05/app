@@ -1,19 +1,28 @@
-<?php 
-
+<?php
 class Cliente {
 
-    private function retornarDatos($sql){
-        require_once 'Conexion.php';
-        $conexion=new Conexion();
-        $cid = $conexion->conectar();
-        $result = $cid->query($sql);
-        $res = ($result->fetch_all()) ? $result->fetch_all() : [];
-        return $res;
-    }
-
-    public function traerClientes(){
-        $sql = "select * from clientes";
-        return $this->retornarDatos($sql);
-    }
-    
+private function dao(){
+    require_once 'Dao.php';
+    $dao = new Dao();
+    return $dao;
 }
+
+
+public function traerClientes(){
+
+    $table = "clients";
+    $conn = $this->dao();
+    return $conn->retornarDatos($table);
+    
+ }
+ public function eliminarCliente(){
+    $table = "clients";
+    $con = $this->dao();
+    return $con->eliminarDatos($id);
+ }
+   
+
+         }
+
+
+
