@@ -8,21 +8,21 @@ private function dao(){
 }
 
 
-public function traerClientes(){
+
+public function traerClientes($id=null){
 
     $table = "clients";
     $conn = $this->dao();
-    return $conn->retornarDatos($table);
-    
- }
- public function eliminarCliente(){
+    return $conn->retornarDatos($table, $id);
+
+}
+
+ public function eliminarCliente($id){
     $table = "clients";
+    $name_id = "client_id";
     $con = $this->dao();
-    return $con->eliminarDatos($id);
+    return $con->eliminarDatos($table, $name_id, $id);
  }
    
 
-         }
-
-
-
+}

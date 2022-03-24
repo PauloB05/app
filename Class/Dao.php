@@ -1,22 +1,33 @@
 <?php
     class Dao {
-        public function retornarDatos($table){
+        public function retornarDatos($table, $id=null){
             require_once 'Conexion.php';
             $conexion=new Conexion();
             $cid = $conexion->conectar();
-            $result = $cid->query("select * from $table");
+            $sql = "select * from $table";
+
+            if($id){
+                $sql .= " where id = $id";
+            }
+            
+            $result = $cid->query($sql);
             $res = [];
             while($row=$result->fetch_assoc()){
                 $res[] = $row;
             }
             return $res;
         }
-    public function eliminarDatos($id){
-        require_once 'Conexion.php';
-            $conexion=new Conexion();
-            $cid = $conexion->conectar();
-            $sql = $cid->query("DELETE * FROM clients WHERE client_id = $id");
-    }
+
+        public function eliminarDatos($table, $name_id, $id){
+            require_once 'Conexion.php';
+                $conexion=new Conexion();
+                $cid = $conexion->conectar();
+                $sql = $cid->query("DELETE * FROM $table WHERE $name_id = $id");
+                $stmt = $mysqli->prepare($sql);
+                $stmt->execute();
+            return true;    
+        }
+
 }
 
     
