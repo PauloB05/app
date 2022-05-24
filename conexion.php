@@ -1,16 +1,25 @@
+
 <?php
- $conexion = mysqli_connect("localhost", "root", "", "base1") or
- die("Problemas con la conexión");
+class Conexion{
+    private $servidor = 'localhost';
+    private $database = 'base1';
+    private $user = 'root';
+    private $pass = 'Pp1537894620.';
+    private $character = 'UTF-8';
 
-function conectar(){
-    $host="localhost";
-    $user="root";
-    $pass="";
-    $bd="base1";
+    public function conectar(){
+        try {
+            $conn = new mysqli($this->servidor, $this->user, $this->pass, $this->database);
 
-    $con=mysqli_connect($host,$user,$pass);
-
-    mysqli_select_db($con,$bd);
-
-    return $con;
- }
+            if ($conn->connect_error) {
+              die("Connection failed: " . $conn->connect_error);
+            }
+            
+            return $conn;
+             
+         } catch (PDOException $e){
+            echo $e->getMessage();
+         }
+    }
+}
+?>

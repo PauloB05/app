@@ -1,50 +1,59 @@
 <?php
     class Dao {
-        public function retornarDatos($table, $id=null){
-            require_once 'Conexion.php';
-            $conexion=new Conexion();
-            $cid = $conexion->conectar();
-            $sql = "select * from $table";
+        public function retornarDatos($base, $id=null){
+                require_once 'Conexion.php';
+                $conexion=new Conexion();
+                $cid = $conexion->conectar()->clients->$base;
+                if($id){
+                    $sql = $cid->find(['_id' =>new MongoDB\BSON\ObjectId($id)]);
+                    $sq = $sql->toArray();
+                    return $sq[0];
 
-            if($id){
-                $sql = " where id = $id";
-            }
-        
-            $result = $cid->query($sql);
-            $res = [];
-            while($row=$result->fetch_assoc()){
-                $res[] = $row;
-            }
-            return $res;
-        }
-
-        public function eliminarDatos($table, $id){
-            require_once 'Conexion.php';
+                } else{
+                    $sql = $cid->find()->toArray();
+                    $res=$sql;  
+                    return $res;
+                }
+        }                 
+   
+        public function eliminarDatos($base,$id){
+                require_once 'Conexion.php';
                 $conexion = new Conexion();
-                $cid = $conexion->conectar();
-                $sql = $cid->query("DELETE * FROM $table WHERE id = $id");
-                var_dump($sql);
-                $stmt = $mysqli->prepare($sql);  
-                $stmt ->execute();
-               return true ; 
-               
-             
+                $cid = $conexion->conectar()->clients->$base;
+                $sql = $cid->deleteOne(["_id"=>new MongoDB\BSON\ObjectId($id)]);
+                return true;
+        
         }
 
-        public function crearClientes($name, $phone, $addres){
+        public function crear($base,$name,$phone,$address){
             require_once 'Conexion.php';
-            $conexion = new Conexion();
-            $cid = $conexion->conectar();
-            $sql = $cid-> query("INSERT INTO clients (client_name, phone, addres) 
-        values ($name, $phone, $addres"); 
-            $stmt = $cid-> prepare($sql);     
-            $stmt->execute();
-            return true ;
+            if($base == "base1"){
+                $conexion = new Conexion();
+                $cid = $conexion->conectar()->clients->$base;
+                $sql = $cid-> insertOne(['order_name'=>$name,'model'=>$phone,'order_condition'=>$address]) ; 
+                return true ;
+            }else{
+                $conexion = new Conexion();
+                $cid = $conexion->conectar()->clients->$base;
+                $sql = $cid-> insertOne(['client_name'=>$name,'phone'=>$phone,'addres'=>$address]) ; 
+                return true ;
+            }
         }
 
-}
-
+        public function editar($id, $name, $model , $condition ,$base){
+            require_once 'Conexion.php';
+            if($base == "base1"){
+                $conexion = new Conexion();
+                $cid = $conexion->conectar()->clients->$base;
+                $sql = $cid -> updateOne(['_id' =>new MongoDB\BSON\ObjectId($id)],['$set' => ['order_name' => $name, 'model'=> $model, 'order_condition' => $condition]]);
+                return true ;
+            }else{
+                $conexion = new Conexion();
+                $cid = $conexion->conectar()->clients->$base;
+                $sql = $cid -> updateOne(['_id' =>new MongoDB\BSON\ObjectId($id)],['$set' => ['client_name' => $name, 'phone'=> $model, 'addres' => $condition]]);
+                return true ;
+            }
+        }
     
+    }
     
-    
-       

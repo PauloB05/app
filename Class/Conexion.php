@@ -1,25 +1,12 @@
-
 <?php
-
+require "../vendor/autoload.php";
 class Conexion{
-    private $servidor = 'localhost';
-    private $database = 'base1';
-    private $user = 'root';
-    private $pass = '';
-    private $character = 'UTF-8';
-
     public function conectar(){
-        try {
-            $conn = new mysqli($this->servidor, $this->user, $this->pass, $this->database);
+      $mongo = new \MongoDB\Client("mongodb://127.0.0.1:27017");
+      $collection = $mongo;
+      return $collection;
 
-            if ($conn->connect_error) {
-              die("Connection failed: " . $conn->connect_error);
-            }
-            
-            return $conn;
-             
-         } catch (PDOException $e){
-            echo $e->getMessage();
-         }
     }
 }
+
+

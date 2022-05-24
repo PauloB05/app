@@ -29,6 +29,15 @@ insert into clients (client_name, phone, addres) values ('Matias','222222', 'asd
 
 #------------------------------------------------------------------------------------------
 
+#creacion tabla de ordenes:
+
+create table orders(
+  id int unsigned auto_increment,
+  order_name varchar(40),
+  model varchar(25),
+  order_condition text,
+  primary key (id)
+ );
 
 
 
