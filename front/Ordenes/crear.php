@@ -9,7 +9,7 @@
     <script src="../js/sweetalert.js"></script>
 </head>
 <body>
-<form method="post" action="../Controller/OrdenesController.php?crear_orden=true" id ="formU">           
+<form method="post" action="http://localhost/prueba/back/index.php" id ="formU">           
 <table id="tabla_clientes">
     <thead>
         <tr>
@@ -20,9 +20,10 @@
     </thead>
     <tbody>
             <tr>
-                <td><input type="text" id="nombree"></td>
-                <td><input type="text" id="modeloo"></td>
-                <td><input type="text" id="condicionn"></td>    
+                <td><input type="text" id="nombree" name="nombre"></td>
+                <td><input type="text" id="modeloo" name="modelo"></td>
+                <td><input type="text" id="condicionn" name="condicion"></td>    
+                <td><input type="file" id="foto" name="foto"></td> 
                 <td><input type="submit" value="crear" id ="btnCrear" ></td>                                        
             </tr>  
     </tbody>
@@ -31,37 +32,45 @@
 
 </div>
 <script>
+
     const btn = document.querySelector("#btnCrear")
     const formm = document.querySelector("#formU")
     const url = formU.getAttribute("action")
 
     btn.addEventListener("click", (e)=>{
         e.preventDefault();
-
+        
         const inNombre = document.getElementById("nombree").value
         const inModelo = document.querySelector("#modeloo").value
         const inCondicion = document.querySelector("#condicionn").value
+        const inImagen = document.querySelector("#img")
 
-        $.post(
-              url,
-            {
-                nombre:inNombre,
-                modelo:inModelo,    
-                condicion:inCondicion
-            },
-            function(response){
-            swal({
+        const data = new FormData(formm)
+
+
+    
+        fetch('http://localhost/prueba/back/index.php',{
+        method:'POST',
+        body:data
+        }) 
+    
+        .then(dat =>{
+            console.log (dat)
+
+             swal({
                 title: "Terminado",
                 text: "Orden Creada",
                 icon: "success",
                 button: "Aceptar",
             })
             .then((value) => {
-                window.location.href = "index.php";
-            });
-            }
-        )
-    })              
+                
+            window.location.href = "index.php";
+            })
+        })
+
+     })              
 </script>
 </body>
 </html>
+<!-- ../Controller/OrdenesController.php?crear_orden=true -->

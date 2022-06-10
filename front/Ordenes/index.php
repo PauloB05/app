@@ -39,23 +39,13 @@
     </div>
 
 <table id="tabla_clientes" class="table table-hover table-bordered">
-    <thead>
-        <tr>
-            <th >order_id</th>
-            <th >nombre</th>
-            <th >modelo</th>
-            <th >condicion</th>     
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
     <script>
-    const tabla = document.querySelector("#tabla_clientes")
-    tabla.addEventListener("load ", armarTabla())
+ 
+    const tabla = document.querySelector("#tabla_clientes");
+    tabla.addEventListener("load", armarTabla() )     
+
 </script>
-    </tbody>
-    </table>
+  
 </div>
     <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script  src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -67,33 +57,7 @@
     <script  src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
     <script src="https://kit.fontawesome.com/d83ef733e2.js" crossorigin="anonymous"></script>
 
-<script>
-
-
-// const cargarArray = ()=>{
-//     const url="http://localhost/prueba/back/Class/test.php"
-//     $.get(
-//         url,
-//         function(response) {
-//           const result = JSON.parse(response);
-//           console.log (result)
-//         }
-//     )
-// }
-
-// cargarArray()
-
-
-
-
-
-
-
- 
-
-    
-
-
+<script>  
 
     $(document).ready(function() {
     $('#tabla_clientes').DataTable({
@@ -134,13 +98,16 @@
       fixedHeader: true
     });
     });
-    const eliminar =(id)=>{
-        const url='../Controller/OrdenesController.php?eliminar_id='+id
-
-        $.get(
-            url,         
-            function(response){   
-            swal({
+    
+    const eliminar =(id)=>{ 
+        const url='http://localhost/prueba/back/index.php?id='+id
+     
+         $.ajax({
+            url,  
+            type:'DELETE',     
+            success:function(response){ 
+              
+                swal({
                 title: "Terminado",
                 text: "Orden Eliminada",
                 icon: "success",
@@ -149,8 +116,14 @@
             .then((value) => {
                 armarTabla()
             });
-            }
-        )
-    }        
+        
+            }, error: function (error) {
+                console.log (error);
+                
+              
+                }
+        })
+    }  
+       
 </script>
 </body>
